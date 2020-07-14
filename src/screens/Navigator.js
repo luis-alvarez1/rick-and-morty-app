@@ -3,7 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import HomeScreen from './HomeScreen';
+import HomeScreen from './home/HomeScreen';
 
 const Stack = createStackNavigator();
 
@@ -12,9 +12,9 @@ const Navigator = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Menu"
+          name="Home"
           component={HomeScreen}
-          options={{header: false}}
+          options={{headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>

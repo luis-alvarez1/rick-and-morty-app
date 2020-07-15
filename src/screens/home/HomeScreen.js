@@ -1,15 +1,47 @@
-import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import CakeComponentTest from '../../components/CakeComponentTest'
-const HomeScreen = () => {
-  return (
-    <View>
-      <Text>Home Screen</Text>
-        <CakeComponentTest />
-    </View>
-  );
+import React, {useEffect} from 'react';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {connect} from 'react-redux';
+import {fetchCharacters} from '../../redux/actions';
+
+const HomeScreen = ({characters, fetchCharacters}) => {
+  useEffect(() => {
+    console.log('llama al effect');
+    fetchCharacters();
+  }, []);
+
+  //TODO: CHARACTERS LLEGA VACÍO
+  console.log('CHARACTERS DESDE PANTALLA!! \n\n\n', characters.characters);
+  if (characters.loading) {
+    return <Text>Loading</Text>;
+  } else if (characters.error) {
+    return <Text>{characters.error}</Text>;
+  } else if (!characters.loading) {
+    return (
+      <View>
+        <Text>HOME</Text>
+
+        <FlatList
+          data={characters.characters}
+          renderItem={(character) => {
+            return <Text>{character.name}</Text>;
+          }}
+        />
+      </View>
+    );
+  }
 };
 
 const styles = StyleSheet.create({});
 
-export default HomeScreen;
+const mapState = (state) => {
+  return {
+    characters: state.reducer,
+  };
+};
+const mapDispatch = (dispatch) => {
+  return {
+    fetchCharacters: () => dispatch(fetchCharacters()),
+  };
+};
+
+export default connect(mapState, mapDispatch)(HomeScreen);

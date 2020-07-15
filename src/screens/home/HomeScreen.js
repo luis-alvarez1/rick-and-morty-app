@@ -25,6 +25,7 @@ const HomeScreen = ({characters, fetchCharacters}) => {
           renderItem={(character) => {
             return <Text>{character.name}</Text>;
           }}
+          keyExtractor={characters.id}
         />
       </View>
     );
